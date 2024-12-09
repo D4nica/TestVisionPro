@@ -1,0 +1,14 @@
+//
+//  IpAddress.swift
+//  TestVisionPro
+//
+//  Created by Sunniva L on 12/1/24.
+//
+
+import Foundation
+
+// 192.168.0.142 //STUDIO X
+// 10.2.222.140 //WEGMANS
+
+var ipAddress: String = "10.2.222.140"
+
