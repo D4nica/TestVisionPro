@@ -1,0 +1,41 @@
+//
+//  MakeTranscription.swift
+//  TestVisionPro
+//
+//  Created by Sunniva L on 12/1/24.
+//
+
+import Foundation
+
+func saveTranscription(_ transcription: String) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+    let timestamp = dateFormatter.string(from: Date())
+    let filename = "transcription_\(timestamp).txt"
+    
+    let fileManager = FileManager.default
+    guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        print("Failed to find the documents directory.")
+        return
+    }
+    
+    let transcriptionsDirectory = documentsDirectory.appendingPathComponent("TranscriptionsSpeech")
+    if !fileManager.fileExists(atPath: transcriptionsDirectory.path) {
+        do {
+            try fileManager.createDirectory(at: transcriptionsDirectory, withIntermediateDirectories: true, attributes: nil)
+            print("Created 'Transcriptions' directory.")
+        } catch {
+            print("Failed to create 'Transcriptions' directory: \(error.localizedDescription)")
+            return
+        }
+    }
+    
+    let fileURL = transcriptionsDirectory.appendingPathComponent(filename)
+    
+    do {
+        try transcription.write(to: fileURL, atomically: true, encoding: .utf8)
+        print("Transcription saved to: \(fileURL.path)")
+    } catch {
+        print("Failed to save transcription: \(error.localizedDescription)")
+    }
+}
